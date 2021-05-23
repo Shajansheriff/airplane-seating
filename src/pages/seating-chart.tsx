@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import React, { FC } from 'react';
 import { green50, red50, blue50, warmGray20 } from '@carbon/colors';
+import { Button } from 'carbon-components-react';
 import { unreachable } from '../utils';
 import { Airplane, SeatType } from '../services/airplane/airplane';
 
