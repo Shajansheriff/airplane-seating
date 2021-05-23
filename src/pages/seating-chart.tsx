@@ -1,15 +1,14 @@
 import styled from 'styled-components';
 import React, { FC } from 'react';
 import { green50, red50, blue50, warmGray20 } from '@carbon/colors';
-import { Button } from 'carbon-components-react';
+import { Button, Tile } from 'carbon-components-react';
 import { unreachable } from '../utils';
 import { Airplane, SeatType } from '../services/airplane/airplane';
 
-const Container = styled.div`
+const Container = styled(Tile).attrs({ light: true })`
   display: flex;
   flex-direction: row;
   padding: 16px;
-  width: 500px;
 `;
 const Section = styled.div`
   padding: 16px;
