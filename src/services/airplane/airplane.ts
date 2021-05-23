@@ -1,8 +1,6 @@
 type Row = number;
 type Column = number;
 type TwoDimensionalArray = Array<[Row, Column]>;
-
-type CreateSeatingChartFn = (input: TwoDimensionalArray) => void;
 export enum SeatType {
   Aisle = 'A',
   Middle = 'M',
@@ -30,6 +28,7 @@ export const MiddleSeatConstructor = (index: number): MiddleSeat => [
 type Seats = Array<Seat>;
 type SeatMatrix = Array<Seats>;
 type SeatingChart = Array<SeatMatrix>;
+type CreateSeatingChartFn = (input: TwoDimensionalArray) => SeatingChart;
 
 const createSeatingChart: CreateSeatingChartFn = (input) => {
   const firstSection = 0;
@@ -41,17 +40,18 @@ const createSeatingChart: CreateSeatingChartFn = (input) => {
       const lastColumn = value.length - 1;
       return value.map((col, colIndex) => {
         const idx = i + colIndex;
-        if (colIndex === firstColumn) {
-          return section === firstSection
-            ? WindowSeatConstructor(idx)
-            : AisleSeatConstructor(idx);
+        switch (colIndex) {
+          case firstColumn:
+            return section === firstSection
+              ? WindowSeatConstructor(idx)
+              : AisleSeatConstructor(idx);
+          case lastColumn:
+            return section === lastSection
+              ? WindowSeatConstructor(idx)
+              : AisleSeatConstructor(idx);
+          default:
+            return MiddleSeatConstructor(idx);
         }
-        if (colIndex === lastColumn) {
-          return section === lastSection
-            ? WindowSeatConstructor(idx)
-            : AisleSeatConstructor(idx);
-        }
-        return MiddleSeatConstructor(idx);
       });
     });
   });
