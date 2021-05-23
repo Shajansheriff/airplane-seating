@@ -2,6 +2,7 @@ import {
   Airplane,
   AisleSeatConstructor,
   MiddleSeatConstructor,
+  RowColumn,
   WindowSeatConstructor,
 } from './airplane';
 
@@ -10,8 +11,14 @@ describe('Create seating chart', () => {
     const chart = Airplane.createSeatingChart([[2, 2]]);
     expect(chart).toEqual([
       [
-        [WindowSeatConstructor(0), WindowSeatConstructor(1)],
-        [WindowSeatConstructor(1), WindowSeatConstructor(2)],
+        [
+          WindowSeatConstructor(RowColumn(0, 0)),
+          WindowSeatConstructor(RowColumn(0, 1)),
+        ],
+        [
+          WindowSeatConstructor(RowColumn(1, 0)),
+          WindowSeatConstructor(RowColumn(1, 1)),
+        ],
       ],
     ]);
   });
@@ -20,55 +27,14 @@ describe('Create seating chart', () => {
     expect(chart).toEqual([
       [
         [
-          WindowSeatConstructor(0),
-          MiddleSeatConstructor(1),
-          WindowSeatConstructor(2),
+          WindowSeatConstructor(RowColumn(0, 0)),
+          MiddleSeatConstructor(RowColumn(0, 1)),
+          WindowSeatConstructor(RowColumn(0, 2)),
         ],
         [
-          WindowSeatConstructor(1),
-          MiddleSeatConstructor(2),
-          WindowSeatConstructor(3),
-        ],
-      ],
-    ]);
-  });
-
-  it('should return an 2x3 , 3x4 seating chart', () => {
-    const chart = Airplane.createSeatingChart([
-      [2, 3],
-      [3, 4],
-    ]);
-    expect(chart).toEqual([
-      [
-        [
-          WindowSeatConstructor(0),
-          MiddleSeatConstructor(1),
-          AisleSeatConstructor(2),
-        ],
-        [
-          WindowSeatConstructor(1),
-          MiddleSeatConstructor(2),
-          AisleSeatConstructor(3),
-        ],
-      ],
-      [
-        [
-          AisleSeatConstructor(0),
-          MiddleSeatConstructor(1),
-          MiddleSeatConstructor(2),
-          WindowSeatConstructor(3),
-        ],
-        [
-          AisleSeatConstructor(1),
-          MiddleSeatConstructor(2),
-          MiddleSeatConstructor(3),
-          WindowSeatConstructor(4),
-        ],
-        [
-          AisleSeatConstructor(2),
-          MiddleSeatConstructor(3),
-          MiddleSeatConstructor(4),
-          WindowSeatConstructor(5),
+          WindowSeatConstructor(RowColumn(1, 0)),
+          MiddleSeatConstructor(RowColumn(1, 1)),
+          WindowSeatConstructor(RowColumn(1, 2)),
         ],
       ],
     ]);
@@ -83,62 +49,71 @@ describe('Create seating chart', () => {
     ]);
     expect(chart).toEqual([
       [
-        [WindowSeatConstructor(0), AisleSeatConstructor(1)],
-        [WindowSeatConstructor(1), AisleSeatConstructor(2)],
-        [WindowSeatConstructor(2), AisleSeatConstructor(3)],
-      ],
-      [
         [
-          AisleSeatConstructor(0),
-          MiddleSeatConstructor(1),
-          AisleSeatConstructor(2),
+          WindowSeatConstructor(RowColumn(0, 0)),
+          AisleSeatConstructor(RowColumn(0, 1)),
         ],
         [
-          AisleSeatConstructor(1),
-          MiddleSeatConstructor(2),
-          AisleSeatConstructor(3),
+          WindowSeatConstructor(RowColumn(1, 0)),
+          AisleSeatConstructor(RowColumn(1, 1)),
         ],
         [
-          AisleSeatConstructor(2),
-          MiddleSeatConstructor(3),
-          AisleSeatConstructor(4),
-        ],
-        [
-          AisleSeatConstructor(3),
-          MiddleSeatConstructor(4),
-          AisleSeatConstructor(5),
+          WindowSeatConstructor(RowColumn(2, 0)),
+          AisleSeatConstructor(RowColumn(2, 1)),
         ],
       ],
       [
         [
-          AisleSeatConstructor(0),
-          MiddleSeatConstructor(1),
-          AisleSeatConstructor(2),
+          AisleSeatConstructor(RowColumn(0, 0)),
+          MiddleSeatConstructor(RowColumn(0, 1)),
+          AisleSeatConstructor(RowColumn(0, 2)),
         ],
         [
-          AisleSeatConstructor(1),
-          MiddleSeatConstructor(2),
-          AisleSeatConstructor(3),
+          AisleSeatConstructor(RowColumn(1, 0)),
+          MiddleSeatConstructor(RowColumn(1, 1)),
+          AisleSeatConstructor(RowColumn(1, 2)),
+        ],
+        [
+          AisleSeatConstructor(RowColumn(2, 0)),
+          MiddleSeatConstructor(RowColumn(2, 1)),
+          AisleSeatConstructor(RowColumn(2, 2)),
+        ],
+        [
+          AisleSeatConstructor(RowColumn(3, 0)),
+          MiddleSeatConstructor(RowColumn(3, 1)),
+          AisleSeatConstructor(RowColumn(3, 2)),
         ],
       ],
       [
         [
-          AisleSeatConstructor(0),
-          MiddleSeatConstructor(1),
-          MiddleSeatConstructor(2),
-          WindowSeatConstructor(3),
+          AisleSeatConstructor(RowColumn(0, 0)),
+          MiddleSeatConstructor(RowColumn(0, 1)),
+          AisleSeatConstructor(RowColumn(0, 2)),
         ],
         [
-          AisleSeatConstructor(1),
-          MiddleSeatConstructor(2),
-          MiddleSeatConstructor(3),
-          WindowSeatConstructor(4),
+          AisleSeatConstructor(RowColumn(1, 0)),
+          MiddleSeatConstructor(RowColumn(1, 1)),
+          AisleSeatConstructor(RowColumn(1, 2)),
+        ],
+      ],
+      [
+        [
+          AisleSeatConstructor(RowColumn(0, 0)),
+          MiddleSeatConstructor(RowColumn(0, 1)),
+          MiddleSeatConstructor(RowColumn(0, 2)),
+          WindowSeatConstructor(RowColumn(0, 3)),
         ],
         [
-          AisleSeatConstructor(2),
-          MiddleSeatConstructor(3),
-          MiddleSeatConstructor(4),
-          WindowSeatConstructor(5),
+          AisleSeatConstructor(RowColumn(1, 0)),
+          MiddleSeatConstructor(RowColumn(1, 1)),
+          MiddleSeatConstructor(RowColumn(1, 2)),
+          WindowSeatConstructor(RowColumn(1, 3)),
+        ],
+        [
+          AisleSeatConstructor(RowColumn(2, 0)),
+          MiddleSeatConstructor(RowColumn(2, 1)),
+          MiddleSeatConstructor(RowColumn(2, 2)),
+          WindowSeatConstructor(RowColumn(2, 3)),
         ],
       ],
     ]);
