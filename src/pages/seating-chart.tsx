@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import React, { FC } from 'react';
-import { Airplane } from '../services/airplane/airplane';
+import { green50, red50, blue50, warmGray20 } from '@carbon/colors';
+import { unreachable } from '../utils';
+import { Airplane, SeatType } from '../services/airplane/airplane';
 
 const Container = styled.div`
   display: flex;
@@ -10,7 +12,7 @@ const Container = styled.div`
 `;
 const Section = styled.div`
   padding: 16px;
-  border: 1px solid black;
+  border: 1px solid ${warmGray20};
 `;
 const Row = styled.div`
   display: flex;
@@ -19,11 +21,24 @@ const Row = styled.div`
   margin: 8px;
   flex: 0 0 40px;
 `;
-const Seat = styled.div`
+
+const getSeatColor = (type: SeatType) => {
+  switch (type) {
+    case SeatType.Aisle:
+      return blue50;
+    case SeatType.Middle:
+      return red50;
+    case SeatType.Window:
+      return green50;
+    default:
+      return unreachable(type);
+  }
+};
+const Seat = styled.div<{ type: SeatType }>`
   min-height: 40px;
   min-width: 40px;
   margin: 4px;
-  border: 1px solid dodgerblue;
+  background-color: ${({ type }) => getSeatColor(type)};
 `;
 
 const Aisle = styled.div`
@@ -49,8 +64,8 @@ export const SeatingChartPage: FC = () => {
           <Section>
             {section.map((row) => (
               <Row>
-                {row.map((seat) => (
-                  <Seat />
+                {row.map(([type]) => (
+                  <Seat type={type} />
                 ))}
               </Row>
             ))}
