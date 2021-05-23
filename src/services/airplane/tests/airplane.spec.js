@@ -4,7 +4,7 @@ import {
   MiddleSeatConstructor,
   RowColumn,
   WindowSeatConstructor,
-} from './airplane';
+} from '../airplane';
 
 describe('Create seating chart', () => {
   it('should return an 2x2 seating chart', () => {

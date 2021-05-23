@@ -79,6 +79,37 @@ const createSeatingChart: CreateSeatingChartFn = (input) => {
   });
 };
 
+type GetSeatsFunc = (seatType: SeatType) => (chart: SeatingChart) => Seats;
+
+const getSeats: GetSeatsFunc =
+  (seatType: SeatType) => (chart: SeatingChart) => {
+    const seats: Seats = [];
+    chart.forEach((section) => {
+      section.forEach((row) => {
+        const result = row.filter((seat) => seat[0] === seatType);
+        seats.push(...result);
+      });
+    });
+    return seats;
+  };
+
+const getAllAisleSeats = (chart: SeatingChart): AisleSeat[] =>
+  getSeats(SeatType.Aisle)(chart) as AisleSeat[];
+const getAllWindowSeats = (chart: SeatingChart): WindowSeat[] =>
+  getSeats(SeatType.Window)(chart) as WindowSeat[];
+const getAllMiddleSeats = (chart: SeatingChart): MiddleSeat[] =>
+  getSeats(SeatType.Middle)(chart) as MiddleSeat[];
+
+export const toSeats = (chart: SeatingChart): Seats => {
+  return Object.values(SeatType).reduce((seats: Seats, type) => {
+    return [...seats, ...getSeats(type as SeatType)(chart)];
+  }, []);
+};
+
+type PassengerId = number;
+type FilledSeat = ['filled', PassengerId, Seat];
+type EmptySeat = ['empty', PassengerId, Seat];
+
 export const Airplane = {
   createSeatingChart,
 };
