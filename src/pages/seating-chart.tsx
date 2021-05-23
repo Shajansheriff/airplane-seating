@@ -52,10 +52,10 @@ const Aisle = styled.div`
 
 export const SeatingChartPage: FC = () => {
   const result = Airplane.createSeatingChart([
-    [3, 2],
-    [4, 3],
     [2, 3],
     [3, 4],
+    [3, 2],
+    [4, 3],
   ]);
   return (
     <Container>
