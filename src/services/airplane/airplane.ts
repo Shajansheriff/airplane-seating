@@ -9,9 +9,10 @@ export enum SeatType {
   Window = 'W',
 }
 
-type WindowSeat = [SeatType.Window, Row, Column];
-type AisleSeat = [SeatType.Aisle, Row, Column];
-type MiddleSeat = [SeatType.Middle, Row, Column];
+type BaseSeat<T> = [T, Row, Column];
+type WindowSeat = BaseSeat<SeatType.Window>;
+type AisleSeat = BaseSeat<SeatType.Aisle>;
+type MiddleSeat = BaseSeat<SeatType.Middle>;
 type Seat = WindowSeat | AisleSeat | MiddleSeat;
 type RowColumn = [Row, Column];
 
@@ -109,6 +110,10 @@ export const toSeats = (chart: SeatingChart): Seats => {
 type PassengerId = number;
 type FilledSeat = ['filled', PassengerId, Seat];
 type EmptySeat = ['empty', PassengerId, Seat];
+
+const assignSeats =
+  (passengerCount = 0) =>
+  (chart: SeatingChart) => {};
 
 export const Airplane = {
   createSeatingChart,
