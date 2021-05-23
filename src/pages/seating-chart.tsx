@@ -22,7 +22,6 @@ const Row = styled.div`
   margin: 8px;
   flex: 0 0 40px;
 `;
-
 const getSeatColor = (type: SeatType) => {
   switch (type) {
     case SeatType.Aisle:

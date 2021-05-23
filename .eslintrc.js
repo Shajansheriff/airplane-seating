@@ -30,7 +30,7 @@ module.exports = {
     'import/no-default-export': 'error',
     'import/prefer-default-export': 'off',
     'prettier/prettier': [
-      'error',
+      'warn',
       {
         endOfLine: 'auto',
         trailingComma: 'all',
