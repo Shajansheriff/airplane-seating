@@ -6,7 +6,7 @@ module.exports = {
     'plugin:jest/recommended',
     'plugin:prettier/recommended'
   ],
-  plugins: ['react', '@typescript-eslint', 'jest'],
+  plugins: ['react', '@typescript-eslint', 'jest', 'prettier'],
   env: {
     browser: true,
     es6: true,
@@ -31,6 +31,10 @@ module.exports = {
       'error',
       {
         endOfLine: 'auto',
+        trailingComma: 'all',
+        tabWidth: 2,
+        semi: true,
+        singleQuote: true,
       },
     ],
   },
