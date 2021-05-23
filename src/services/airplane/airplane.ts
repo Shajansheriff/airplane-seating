@@ -35,22 +35,25 @@ const createSeatingChart: CreateSeatingChartFn = (input) => {
   const firstSection = 0;
   const lastSection = input.length - 1;
   return input.map(([row, column], section) => {
-    // first & last group will have window seats
     const matrix = new Array(row).fill(0).map(() => new Array(column).fill(0));
-    // if (section === firstSection || section === lastSection) {
     return matrix.map((value, i) => {
+      const firstColumn = 0;
+      const lastColumn = value.length - 1;
       return value.map((col, colIndex) => {
         const idx = i + colIndex;
-        if (colIndex === 0) {
-          return WindowSeatConstructor(idx);
+        if (colIndex === firstColumn) {
+          return section === firstSection
+            ? WindowSeatConstructor(idx)
+            : AisleSeatConstructor(idx);
         }
-        if (colIndex === value.length - 1) {
-          return AisleSeatConstructor(idx);
+        if (colIndex === lastColumn) {
+          return section === lastSection
+            ? WindowSeatConstructor(idx)
+            : AisleSeatConstructor(idx);
         }
         return MiddleSeatConstructor(idx);
       });
     });
-    // }
   });
 };
 
