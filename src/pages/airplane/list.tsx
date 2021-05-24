@@ -154,7 +154,6 @@ export const AirplaneListPage: FC = () => {
         getRowProps,
         getTableProps,
         getToolbarProps,
-        onInputChange,
         getTableContainerProps,
       }) => (
         <TableContainer
@@ -166,7 +165,12 @@ export const AirplaneListPage: FC = () => {
             <TableToolbarContent>
               <ModalStateManager
                 renderLauncher={({ setOpen }) => (
-                  <Button onClick={() => setOpen(true)}>New Airplane</Button>
+                  <Button
+                    data-cy="new-airplane-button"
+                    onClick={() => setOpen(true)}
+                  >
+                    New Airplane
+                  </Button>
                 )}
               >
                 {({ open, setOpen }) => (
@@ -205,6 +209,7 @@ export const AirplaneListPage: FC = () => {
               {rows.map((row) => (
                 <TableRow
                   key={row.id}
+                  data-cy={row.id}
                   {...getRowProps({
                     row,
                   })}
@@ -212,6 +217,7 @@ export const AirplaneListPage: FC = () => {
                   {row.cells.map((cell) => (
                     <TableCell
                       key={cell.id}
+                      data-cy={`cell-id-${cell.id}`}
                       onClick={() => history.push(`/airplane/${row.id}`)}
                     >
                       {cell.value}

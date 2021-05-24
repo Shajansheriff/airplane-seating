@@ -119,7 +119,7 @@ export const AirplaneDetailPage: FC = () => {
           <div className="bx--data-table-header__description">Dimensions</div>
         </div>
         <div className="bx--data-table-header">
-          <div className="bx--data-table-header__title">
+          <div className="bx--data-table-header__title" data-cy="total-seats">
             {airplane.totalSeats}
           </div>
           <div className="bx--data-table-header__description">Seats</div>
@@ -151,11 +151,21 @@ export const AirplaneDetailPage: FC = () => {
               <Section>
                 {section.map((row) => (
                   <Row>
-                    {row.map(([type, seat]) => (
-                      <Seat type={type} size={32}>
-                        {seatingInfo[Airplane.toSeatId(seat)]}
-                      </Seat>
-                    ))}
+                    {row.map(([type, seat]) => {
+                      const allottedPassenger =
+                        seatingInfo[Airplane.toSeatId(seat)];
+                      return (
+                        <Seat
+                          type={type}
+                          size={32}
+                          data-cy="seat"
+                          data-cy-allotted={!!allottedPassenger}
+                          data-cy-allotted-passenger={allottedPassenger}
+                        >
+                          {allottedPassenger}
+                        </Seat>
+                      );
+                    })}
                   </Row>
                 ))}
               </Section>
