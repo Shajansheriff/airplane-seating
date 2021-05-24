@@ -29,6 +29,7 @@ module.exports = {
     'linebreak-style': 'off',
     'import/no-default-export': 'error',
     'import/prefer-default-export': 'off',
+    "react/jsx-props-no-spreading": 'off',
     'prettier/prettier': [
       'warn',
       {

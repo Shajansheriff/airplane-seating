@@ -1,15 +1,15 @@
 import { Route, Switch } from 'react-router';
 import React from 'react';
-import { CreateSeatingChartPage, SeatingChartPage } from '../pages';
+import { AirplaneDetailPage, AirplaneListPage } from '../pages';
 
 export const Routes = () => {
   return (
     <Switch>
-      <Route path="/result">
-        <SeatingChartPage />
+      <Route path="/airplane/:airplaneId">
+        <AirplaneDetailPage />
       </Route>
       <Route path="/" exact>
-        <CreateSeatingChartPage />
+        <AirplaneListPage />
       </Route>
     </Switch>
   );

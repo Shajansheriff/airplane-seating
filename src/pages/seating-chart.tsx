@@ -50,21 +50,24 @@ const Aisle = styled.div`
 `;
 
 export const SeatingChartPage: FC = () => {
-  const result = Airplane.createSeatingChart([
+  const chart = Airplane.createSeatingChart([
     [2, 3],
     [3, 4],
     [3, 2],
     [4, 3],
   ]);
+  const seatingInfo = Airplane.getSeatingStatus(30)(chart);
   return (
     <Container>
-      {result.map((section) => (
+      {chart.map((section) => (
         <>
           <Section>
             {section.map((row) => (
               <Row>
-                {row.map(([type]) => (
-                  <Seat type={type} />
+                {row.map(([type, seat]) => (
+                  <Seat type={type}>
+                    {seatingInfo[Airplane.toSeatId(seat)]}
+                  </Seat>
                 ))}
               </Row>
             ))}
