@@ -93,9 +93,8 @@ jobs:
         with:
           path: build
           key: ${{ runner.os }}-build-${{ hashFiles('yarn.lock', 'package.json','public/**/*.*', 'src/**/*.*', 'tsconfig.json') }}
-      - name: Run and record E2E tests
+      - name: Run E2E tests
         uses: cypress-io/github-action@v2
         with:
           browser: chrome
           start: yarn start
-          record: true
