@@ -1,0 +1,101 @@
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  yarn:
+    name: Cache node modules
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v2
+      - name: Restore node modules cache
+        uses: actions/cache@v2
+        id: yarn_cache
+        with:
+          path: |
+            node_modules
+            /home/runner/.cache/Cypress
+          key: ${{ runner.os }}-node_modules-${{ hashFiles('yarn.lock', 'package.json') }}
+      - name: Install node modules
+        if: steps.yarn_cache.outputs.cache-hit != 'true'
+        run: yarn install --frozen-lockfile --production=false --silent
+  test:
+    name: Run unit tests
+    needs: [ yarn ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v2
+      - name: Restore coverage cache
+        uses: actions/cache@v2
+        id: test_cache
+        with:
+          path: coverage
+          key: ${{ runner.os }}-coverage-${{ hashFiles('yarn.lock', 'package.json', 'public/**/*.*', 'src/**/*.*', 'tsconfig.json') }}
+      - name: Restore node modules cache
+        if: steps.test_cache.outputs.cache-hit != 'true'
+        uses: actions/cache@v2
+        id: yarn_cache
+        with:
+          path: |
+            node_modules
+            /home/runner/.cache/Cypress
+          key: ${{ runner.os }}-node_modules-${{ hashFiles('yarn.lock', 'package.json', 'patches/*.patch') }}
+      - name: Run unit tests with coverage
+        if: steps.test_cache.outputs.cache-hit != 'true'
+        run: yarn test --coverage
+  build:
+    name: Create production build
+    needs: [ yarn ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v2
+      - name: Restore build cache
+        uses: actions/cache@v2
+        id: build_cache
+        with:
+          path: build
+          key: ${{ runner.os }}-build-${{ hashFiles('yarn.lock', 'package.json', 'public/**/*.*', 'src/**/*.*', 'tsconfig.json') }}
+      - name: Restore node modules cache
+        if: steps.build_cache.outputs.cache-hit != 'true'
+        uses: actions/cache@v2
+        id: yarn_cache
+        with:
+          path: |
+            node_modules
+            /home/runner/.cache/Cypress
+          key: ${{ runner.os }}-node_modules-${{ hashFiles('yarn.lock', 'package.json', 'patches/*.patch') }}
+      - name: Create optimized production build
+        if: steps.build_cache.outputs.cache-hit != 'true'
+        run: yarn build
+  e2e:
+    name: Run E2E tests
+    needs: [ build ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v2
+      - name: Restore node modules cache
+        uses: actions/cache@v2
+        id: yarn_cache
+        with:
+          path: |
+            node_modules
+            /home/runner/.cache/Cypress
+          key: ${{ runner.os }}-node_modules-${{ hashFiles('yarn.lock', 'package.json', 'patches/*.patch') }}
+      - name: Restore build cache
+        uses: actions/cache@v2
+        id: build_cache
+        with:
+          path: build
+          key: ${{ runner.os }}-build-${{ hashFiles('yarn.lock', 'package.json','public/**/*.*', 'src/**/*.*' 'tsconfig.json') }}
+      - name: Run and record E2E tests
+        uses: cypress-io/github-action@v2
+        with:
+          browser: chrome
+          start: yarn start
+          record: true
