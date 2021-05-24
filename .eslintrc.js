@@ -30,6 +30,8 @@ module.exports = {
     'import/no-default-export': 'error',
     'import/prefer-default-export': 'off',
     "react/jsx-props-no-spreading": 'off',
+    "@typescript-eslint/no-explicit-any": 'off',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
     'prettier/prettier': [
       'warn',
       {

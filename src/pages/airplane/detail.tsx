@@ -134,8 +134,8 @@ export const AirplaneDetailPage: FC = () => {
             max={airplane.totalSeats}
             onChange={({ target: { value } }) => {
               const count = Number(value);
-              if (!isNaN(Number(value))) {
-                setPassengerCount(Number(value));
+              if (!isNaN(Number(count))) {
+                setPassengerCount(count);
               }
             }}
             invalidText={`Max seats: ${airplane.totalSeats}`}

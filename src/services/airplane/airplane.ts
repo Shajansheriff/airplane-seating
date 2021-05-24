@@ -1,5 +1,4 @@
 import { last, set } from 'lodash';
-import { unreachable } from '../../utils';
 
 type Row = number;
 type Column = number;
@@ -38,54 +37,6 @@ export const MiddleSeatConstructor = (input: RowColumn): MiddleSeat => [
   input,
 ];
 
-const SeatConstructor = (seatType: SeatType, rowColumn: RowColumn): Seat => {
-  switch (seatType) {
-    case SeatType.Aisle:
-      return AisleSeatConstructor(rowColumn);
-    case SeatType.Middle:
-      return MiddleSeatConstructor(rowColumn);
-    case SeatType.Window:
-      return WindowSeatConstructor(rowColumn);
-    default:
-      return unreachable(seatType);
-  }
-};
-const alphabet = [
-  'a',
-  'b',
-  'c',
-  'd',
-  'e',
-  'f',
-  'g',
-  'h',
-  'i',
-  'j',
-  'k',
-  'l',
-  'm',
-  'n',
-  'o',
-  'p',
-  'q',
-  'r',
-  's',
-  't',
-  'u',
-  'v',
-  'w',
-  'x',
-  'y',
-  'z',
-];
-
-const toAlpha = (index: number): string => {
-  return String(index)
-    .split('')
-    .map((each) => alphabet[Number(each)])
-    .join('');
-};
-
 type Seats = Array<Seat>;
 type Section = Array<Seats>;
 type SeatingChart = Array<Section>;
@@ -94,10 +45,6 @@ type CreateSeatingChartFn = (input: TwoDimensionalArray) => SeatingChart;
 const createSeatingChart: CreateSeatingChartFn = (input) => {
   const firstSection = 0;
   const lastSection = input.length - 1;
-  const columns = input.map(([, col]) => col);
-  const totalColumns = columns.reduce((total, col) => {
-    return total + col;
-  }, 0);
   return input.map(([rowCount, columnCount], section) => {
     const matrix = new Array(rowCount)
       .fill(0)

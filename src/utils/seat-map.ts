@@ -18,7 +18,7 @@ export const isValidTwoDimensionalArray = (input: any): boolean => {
   });
 };
 
-export const parseString = (string: string) => {
+export const parseString = (string: string): any | string => {
   try {
     return JSON.parse(string);
   } catch {

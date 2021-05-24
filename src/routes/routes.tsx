@@ -1,8 +1,8 @@
 import { Route, Switch } from 'react-router';
-import React from 'react';
+import React, { FC } from 'react';
 import { AirplaneDetailPage, AirplaneListPage } from '../pages';
 
-export const Routes = () => {
+export const Routes: FC = () => {
   return (
     <Switch>
       <Route path="/airplane/:airplaneId">
